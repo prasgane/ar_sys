@@ -253,8 +253,8 @@ public:
 
             cv::Mat rotMat;
             cv::Rodrigues(rvec, rotMat);
-            cv::Mat eZ = (cv::Mat_<double>(3, 1) << 0.0, 0.0, 1.0);
-            cv::Mat eZ_prime = rotMat*eZ;
+//            cv::Mat eZ = (cv::Mat_<double>(3, 1) << 0.0, 0.0, 1.0);
+//            cv::Mat eZ_prime = rotMat*eZ;
             if (tvec[2] < 0) {
                 std::cout << "cv::solvePnP converged to invalid transform translation z = " << tvec[2] <<
                         " when, in reality we must assert, z > 0." << std::endl;
@@ -304,33 +304,33 @@ public:
                 corner_pub.publish(cornerMsg);
             }
 
-            if (eZ_prime.at<double>(2,0) > 0) {
-                // flip y and z
-                rotMat.at<double>(0, 1) *= -1.0;
-                rotMat.at<double>(1, 1) *= -1.0;
-                rotMat.at<double>(2, 1) *= -1.0;
-                rotMat.at<double>(0, 2) *= -1.0;
-                rotMat.at<double>(1, 2) *= -1.0;
-                rotMat.at<double>(2, 2) *= -1.0;
-                eZ = (cv::Mat_<double>(3, 1) << 0.0, 0.0, 1.0);
-                eZ_prime = rotMat*eZ;
-                if (eZ_prime.at<double>(2,0) > 0) {
-                    // flip y again 
-                    rotMat.at<double>(0, 1) *= -1.0;
-                    rotMat.at<double>(1, 1) *= -1.0;
-                    rotMat.at<double>(2, 1) *= -1.0;
-                    // flip x and z (z is already flipped from above)
-                    rotMat.at<double>(0, 0) *= -1.0;
-                    rotMat.at<double>(1, 0) *= -1.0;
-                    rotMat.at<double>(2, 0) *= -1.0;
-                    //std::cout << "Different fix via XZ-flip applied." << std::endl;
-                } else {
-                    //std::cout << "fix via YZ-flip applied." << std::endl;
-                }
-                eZ = (cv::Mat_<double>(3, 1) << 0.0, 0.0, 1.0);
-                eZ_prime = rotMat*eZ;
-                cv::Rodrigues(rotMat, rvec);
-            }
+//            if (eZ_prime.at<double>(2,0) > 0) {
+//                // flip y and z
+//                rotMat.at<double>(0, 1) *= -1.0;
+//                rotMat.at<double>(1, 1) *= -1.0;
+//                rotMat.at<double>(2, 1) *= -1.0;
+//                rotMat.at<double>(0, 2) *= -1.0;
+//                rotMat.at<double>(1, 2) *= -1.0;
+//                rotMat.at<double>(2, 2) *= -1.0;
+//                eZ = (cv::Mat_<double>(3, 1) << 0.0, 0.0, 1.0);
+//                eZ_prime = rotMat*eZ;
+//                if (eZ_prime.at<double>(2,0) > 0) {
+//                    // flip y again
+//                    rotMat.at<double>(0, 1) *= -1.0;
+//                    rotMat.at<double>(1, 1) *= -1.0;
+//                    rotMat.at<double>(2, 1) *= -1.0;
+//                    // flip x and z (z is already flipped from above)
+//                    rotMat.at<double>(0, 0) *= -1.0;
+//                    rotMat.at<double>(1, 0) *= -1.0;
+//                    rotMat.at<double>(2, 0) *= -1.0;
+//                    //std::cout << "Different fix via XZ-flip applied." << std::endl;
+//                } else {
+//                    //std::cout << "fix via YZ-flip applied." << std::endl;
+//                }
+//                eZ = (cv::Mat_<double>(3, 1) << 0.0, 0.0, 1.0);
+//                eZ_prime = rotMat*eZ;
+//                cv::Rodrigues(rotMat, rvec);
+//            }
 
 
             tf::Transform transform;

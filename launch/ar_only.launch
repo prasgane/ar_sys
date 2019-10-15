@@ -3,7 +3,7 @@
     <arg name="record_bag" default="true"/>
     <arg name="bag_name" default="test"/>
     <arg name="driver_astra" value="false"/>
-    <arg name="driver_openni2" value="true"/>
+    <arg name="driver_openni2" value="false"/>
 
     <group if="$(arg driver_astra)">
         <include file="$(find astra_launch)/launch/astra_pro.launch"/>
